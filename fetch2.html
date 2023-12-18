@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Peticion de un JSON con Fetch</h1>
+  <button onclick="loadText('task.json')">Cargar JSON</button>
+  <ul id="list"></ul>
+  <p>
+    Numero de tareas : <span id="tasksNumber">--</span>
+  </p>
+  <script>
+    const list = document.getElementById('list');
+    const tasksNumber = document.getElementById('tasksNumber');
+    function loadText(){
+      fetch('task.json')
+      .then(resp=>resp.json())
+      .then(task=> {
+        list.innerHTML = '';
+        task.forEach(task => {
+          const li = document.createElement('li');
+          li.textContent = task;
+          list.appendChild(li);
+        });
+        countTasks();
+    });
+    list.innerHTML = "<li>Cargando...</li>";
+    }
+
+    function countTasks(){
+      tasksNumber.textContent = list.children.length;
+    }
+
+    countTasks();
+
+  </script>
+</body>
+</html>
